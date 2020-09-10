@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+       body > *{
+            all:unset
+        }
+        html, body{
+            height: 100%;
+            overflow: hidden;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .main{
+            background-color: rgb(255, 200, 138);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .main #title{
+            font-size: 5em;
+            color: black;
+            position: relative;
+            bottom: 50px;
+        }
+        .main #btn{
+            background-color: white;
+            transform: scale(1.1);
+            transition: all 0.3s ease-in-out;
+            position: relative;
+            bottom: 100px;
+            border: none;
+            background-color: none;
+            width: 100px;
+            height: 50px;
+        }
+        .main #btn a{
+            transform: none;
+            text-decoration: none;
+            font-weight: bold;
+            color: black;
+        }
+        .main #btn:hover{
+            width: 200px;
+            font-size: 18px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="main">
+        <p id="title">FREE BOARD</p>    
+        <button id="btn"><a href="./board.html">ENTER</a></button>
+    </div>
+</body>
+</html>

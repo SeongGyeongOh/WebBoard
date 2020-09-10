@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>simple board</title>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        body ul, li, a{
+            list-style: none;
+            text-decoration: none;
+        }
+
+        header{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            background-color: rgb(255, 200, 138);
+        }
+        header #title{
+            font-size: 2em;
+            margin-bottom: 0.5em;
+            font-weight: bold;
+        }
+
+        div.container{
+            max-width: 1140px;
+            display: flex;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .container #nav{
+            flex-grow: 1.5;
+            border-radius: 10px;
+            border: 2px solid black;  
+            padding-left: 20px;          
+            padding-top: 30px;
+            margin-right: 10px;
+        }
+        .container #nav ul{
+            display: flex;
+            flex-direction: column;
+        }
+        .container #nav ul li{
+            margin-bottom: 50px;
+        }
+        
+        .container #nav ul li a{
+            color: black;
+        }
+        .container #section{
+            flex-grow: 8;
+        }
+
+        footer{
+            padding: 35px 0px;
+            width: 100%;
+            text-align: center;
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <p id="title">Free Board</p>
+        <p id="subTitle">자유롭게 글을 남기는 게시판입니다</p>
+    </header>
+
+    <div class="container">
+        <nav id="nav">
+            <ul>
+                <li><a href="./index.html">메인</a></li>
+                <li><a href="#">게시판</a></li>
+                <li onclick="clickWrite()">글남기기</li>
+            </ul>
+        </nav>
+        <section id="section" >
+            <!-- DB에서 읽어올 것! -->
+            <div></div>
+
+        </section>
+        
+    </div>
+
+
+    <footer style="background-color: slategray;">
+        <p>Gyeong</p>
+    </footer>
+</body>
+
+<script>
+    function clickWrite(){
+        var url='./write.html';
+        var req=new XMLHttpRequest();
+        req.open('GET', url, true);
+        req.responseType='html';
+        req.onreadystatechange=function(){
+            if(req.readyState==4&&req.status==200){
+     
+                var section=document.getElementById('section');
+                section.innerHTML=req.responseText;
+
+
+            }
+        }
+        req.send();
+    
+    }
+
+    function saveData(){
+            var postTitle=document.getElementById('postTitle').value;
+            var postName=document.getElementById('postName').value;
+            var postDetail=document.getElementById('postDetail').value;
+
+            var req=new XMLHttpRequest();
+            req.onreadystatechange=function(){
+                if(req.readyState==4&&req.status==200){
+                    alert(req.responseText);
+                    location.href="./board.html"
+                }
+            }            
+            req.open('POST', './saveData.php', true);
+            req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            req.send('postTitle='+postTitle+'&postName='+postName+'&postDetail='+postDetail);  
+        }
+</script>
+</html>
