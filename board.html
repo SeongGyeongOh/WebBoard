@@ -55,7 +55,19 @@
             color: black;
         }
         .container #section{
-            flex-grow: 8;
+            flex-grow: 5;
+            border: 1px solid red;
+            display: flex;
+            flex-direction: column;
+        }
+        .container #section .dataList{
+            border: 1px solid blue;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+        .container #section .dataList >li{
+            border: 1px solid green;
         }
 
         footer{
@@ -68,7 +80,7 @@
     </style>
 </head>
 
-<body>
+<body onload="loadData()">
     <header>
         <p id="title">Free Board</p>
         <p id="subTitle">자유롭게 글을 남기는 게시판입니다</p>
@@ -78,13 +90,12 @@
         <nav id="nav">
             <ul>
                 <li><a href="./index.html">메인</a></li>
-                <li><a href="#">게시판</a></li>
+                <li><a href="#" onclick="loadData()">게시판</a></li>
                 <li onclick="clickWrite()">글남기기</li>
             </ul>
         </nav>
         <section id="section" >
             <!-- DB에서 읽어올 것! -->
-            <div></div>
 
         </section>
         
@@ -97,11 +108,42 @@
 </body>
 
 <script>
+
+    function clickTest(a){
+        alert(a);
+    }
+
+    function loadData(){
+        let section=document.getElementById('section');
+        section.innerHTML="";
+        var url='./loadData.php';
+        var req=new XMLHttpRequest();
+        req.open('GET', url, true);
+        req.onreadystatechange=function(){
+            if(req.readyState==4&&req.status==200){
+                let jsonArray=JSON.parse(req.responseText);
+
+                for(let i=0;i<jsonArray.length;i++){
+                    let jsonStr=jsonArray[i];
+                    section.innerHTML+=('<ul class="dataList" onclick="clickItem(\''+jsonStr.postDetail+'\')"><li>'+jsonStr.postName+'</li><li>'+jsonStr.postTitle+'</li></ul>');
+                }
+            }
+        }
+        req.send();
+    }
+
+    function clickItem(a){
+        let section=document.getElementById('section');
+        alert(a);
+        // section.innerHTML=("<p class='itemTitle'>"+a.postTitle+"</p><p>"+a.postName+"</p><p>"+a.postDetail+"</p>");
+        section.innerHTML=a;
+    }
+
     function clickWrite(){
         var url='./write.html';
         var req=new XMLHttpRequest();
         req.open('GET', url, true);
-        req.responseType='html';
+        // req.responseType='html';
         req.onreadystatechange=function(){
             if(req.readyState==4&&req.status==200){
      
