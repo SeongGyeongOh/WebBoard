@@ -15,57 +15,24 @@
             list-style: none;
             text-decoration: none;
         }
-
-        /* header{
+        #post{
             display: flex;
             flex-direction: column;
-            align-items: center;
-            padding: 20px 0;
-            background-color: rgb(255, 200, 138);
-        }
-        header #title{
-            font-size: 2em;
-            margin-bottom: 0.5em;
-            font-weight: bold;
-        }
-
-        div.container{
-            max-width: 1140px;
-            display: flex;
-            margin-left: auto;
-            margin-right: auto;
-            border: 1px solid red;
-            overflow: hidden;
-        }
-        .container #nav{
-            flex-grow: 1.5;
-            border-radius: 10px;
-            border: 2px solid black;  
-            padding-left: 20px;          
-            padding-top: 30px;
-            margin-right: 10px;
-            
-        }
-        .container #nav ul{
-            display: flex;
-            flex-direction: column;
-        }
-        .container #nav ul li{
-            margin-bottom: 50px;
-        }
-         */
-        .container #nav ul li a{
-            color: black;
-        }
-        .container #section{
-            flex-grow: 8;
-            border: 1px solid black;
-        }
-        .container >#section #post{
-            display: flex;
-            flex-direction: column;
-            margin: 30px 20px;
             border: none;
+            margin-top: 10px;
+        }
+        #post .block p{
+            width: 4em;
+        }
+        #post input{
+            height: 1.8em;
+            padding-left: 5px;
+        }
+        #post #postTitle{
+            width: 50em;
+        }
+        #post #postName{
+            width: 20em;
         }
         #post input,textarea{
             border: 1px solid black;
@@ -73,27 +40,46 @@
             resize: none;
         }
         #post .button{
-            border: 1px solild whitesmoke;
+            border: 1px solid rgb(231, 222, 222);
             border-radius: 4px;
             background-color: coral;
-            display: inline;
-
+            width: 5em;
+            color: cornsilk;
+            font-weight: bold;
+            padding-left: 0px;
+            margin: 10px 0px;
+        }
+        #post .button:hover{
+            color: firebrick;
         }
         .container #section #post .block{
             display: flex;
             margin-bottom: 10px;
         }
-        .block p{
-            width: 4em;
-        }
 
-        .block #postTitle{
-            width: 80%;
-        }
         #postDetail{
             width: 90%;
             height: 30em;
             padding: 10px 5px;
+        }
+        @media(max-width: 560px){
+            #post{
+                margin-left: 8px;
+                margin-right: 8px;
+            }
+            #post .block{
+                display: flex;
+                flex-direction: column;
+            }
+            #postDetail{
+                width: 95%;
+            }
+            #post #postTitle{
+                width: 95%;
+            }
+            #post #postName{
+                width: 95%;
+            }
         }
     </style>
 </head>
@@ -101,29 +87,25 @@
 
 <body id="body" onload="check()">
 
-    <div class="container">
-        <section id="section" >
-            <fieldset id="post">
-                <div class="block">
-                    <p>제목</p> 
-                    <input type="text" id="postTitle" name="postTitle" required maxlength="50">
-                </div>
-                <div class="block">
-                    <p>게시자</p> 
-                    <input type="text" id="postName" name="postName" required maxlength="20">
-                </div>
-                <div>
-                    <p>게시글</p> 
-                    <textarea name="postDetail" id="postDetail" ></textarea>
-                </div>
-                
-                <div>
-                    <input type="button" class="button" id="cancel" value="취소" onclick="cancleWriting()">
-                    <input type="submit" class="button" id="submit" value="저장" onclick="saveData()">
-                </div>
-            </fieldset>
-        </section>
-    </div>
+    <section id="post">
+        <div class="block">
+            <p>제목</p> 
+            <input type="text" id="postTitle" name="postTitle" required maxlength="50">
+        </div>
+        <div class="block">
+            <p>게시자</p> 
+            <input type="text" id="postName" name="postName" required maxlength="20">
+        </div>
+        <div>
+            <p>게시글</p> 
+            <textarea name="postDetail" id="postDetail" ></textarea>
+        </div>
+        
+        <div>
+            <input type="button" class="button" id="cancel" value="취소" onclick="cancleWriting()">
+            <input type="submit" class="button" id="submit" value="저장" onclick="saveData()">
+        </div>
+    </section>
 
 
     <script>
@@ -144,14 +126,6 @@
             req.send('postTitle='+postTitle+'&postName='+postName+'&postDetail='+postDetail);  
         }
 
-        function cancleWriting(){
-            confirm("작성을 중단하시겠습니까?");
-
-        }
-
-        function check(){
-            alert('야ㅑㅑㅑㅑㅑㅑㅑㅑ');
-        }
     </script>
 
 
