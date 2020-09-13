@@ -85,16 +85,16 @@
 </head>
 
 
-<body id="body" onload="check()">
+<body id="body">
 
     <section id="post">
         <div class="block">
             <p>제목</p> 
-            <input type="text" id="postTitle" name="postTitle" required maxlength="50">
+            <input type="text" id="postTitle" name="postTitle" maxlength="50">
         </div>
         <div class="block">
             <p>게시자</p> 
-            <input type="text" id="postName" name="postName" required maxlength="20">
+            <input type="text" id="postName" name="postName" maxlength="20">
         </div>
         <div>
             <p>게시글</p> 
@@ -106,27 +106,6 @@
             <input type="submit" class="button" id="submit" value="저장" onclick="saveData()">
         </div>
     </section>
-
-
-    <script>
-        function saveData(){
-            var postTitle=document.getElementById('postTitle').value;
-            var postName=document.getElementById('postName').value;
-            var postDetail=document.getElementById('postDetail').value;
-
-            var req=new XMLHttpRequest();
-            req.onreadystatechange=function(){
-                if(req.readyState==4&&req.status==200){
-                    alert(req.responseText);
-                    location.href="./board.html"
-                }
-            }            
-            req.open('POST', './saveData.php', true);
-            req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            req.send('postTitle='+postTitle+'&postName='+postName+'&postDetail='+postDetail);  
-        }
-
-    </script>
 
 
 </body>
