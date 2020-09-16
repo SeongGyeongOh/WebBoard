@@ -12,9 +12,8 @@
         $row=mysqli_fetch_array($result, MYSQLI_ASSOC);
         $rows[$i]=$row;
     }
-
     echo json_encode($rows);
 
-    mysqli_close($conn);
+    mysqli_close($conn);    
 
 ?>
