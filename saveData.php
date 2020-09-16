@@ -6,6 +6,11 @@
     $postDetail=$_POST['postDetail'];
 
     // echo "$postTitle $postName $postDetail";
+    // $postDetail=nl2br($postDetail);
+
+    $remove_character = array("\n", "\r\n", "\r");
+
+    $postDetail = str_replace($remove_character,"<br>", $postDetail);
 
     $conn=mysqli_connect("localhost", "kamniang", "rhdiddl12!", "kamniang");
 

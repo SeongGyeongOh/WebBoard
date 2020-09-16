@@ -10,6 +10,13 @@
             margin: 0;
             padding: 0;
         }
+        body, html{
+            height: 100%;
+        }
+        body{
+            display:flex;
+            flex-direction: column;
+        }
 
         body ul, li, a{
             list-style: none;
@@ -30,12 +37,15 @@
         }
 
         div.container{
+            width: 80%;
             max-width: 1140px;
             display: flex;
+            justify-content: center;
             margin-left: auto;
             margin-right: auto;
             margin-top: 10px;
             margin-bottom: 10px;
+            min-height: 70%;
         }
         .container #nav{
             border-radius: 10px;
@@ -43,7 +53,7 @@
             padding-left: 20px;          
             padding-top: 30px;
             margin-right: 10px;
-            flex-shrink: 0;
+            /* flex-shrink: 0; */
             width: 25%;
         }
         .container #nav ul{
@@ -66,12 +76,12 @@
             width: 70%;
             display: flex;
             flex-direction: column;
+            overflow-y: auto;
         }
         .container #section .dataList{
             border: 1px solid grey;
             background-color: rgb(250, 245, 245);
             border-radius: 8px;
-            /* display: flex; */
             flex-direction: column-reverse;
             margin: 10px 0px;
             padding: 4px 8px;
@@ -102,7 +112,9 @@
         }   
 
         footer{
-            padding: 35px 0px;
+            height: 100px;
+            padding-top: 50px;
+            padding-bottom: 50px;
             width: 100%;
             text-align: center;
             background-color: black;
@@ -110,17 +122,18 @@
             font-size: 1.2em;
         }
         @media(max-width:560px){
-            .container{
+            div.container{
                 flex-direction: column;
                 align-items: center;
+                padding-bottom: -100px;
+                min-height: fit-content;
             }
             .container #nav{
                 border-radius: 10px;
                 border: 2px solid black;  
                 padding: 8px 0px;
-                /* margin-left: auto;
-                margin-right: auto; */
                 width: 90%;
+                margin-right: -4px;
             }
             .container #nav ul{
                 flex-direction: row;
@@ -132,8 +145,6 @@
             .container #section{
                 width: 95%;
             }
-
-
         }
     </style>
 </head>
@@ -154,7 +165,6 @@
         </nav>
         <section id="section" >
             <!-- DB에서 읽어올 것! -->
-
         </section>
         
     </div>
@@ -174,23 +184,24 @@
         var url='./loadData.php';
         var req=new XMLHttpRequest();  
 
-        req.open('GET', url, true);
         req.onreadystatechange=function(){
             if(req.readyState==4&&req.status==200){
                 let jsonArray=JSON.parse(req.responseText);
-
+                
                 for(let i=0;i<jsonArray.length;i++){
                     let jsonStr=jsonArray[i];
                     section.innerHTML+=('<ul class="dataList" onclick="clickItem(\''+jsonStr.postName+'\',\''+jsonStr.postTitle+'\',\''+jsonStr.postDetail+'\')"><li>'+jsonStr.postName+'</li><li>'+jsonStr.postTitle+'</li></ul>');
                 }
             }
         }
+        req.open('GET', url, true);
         req.send();
     }
 
     function clickItem(name, title, detail){
+        alert(detail);
         let section=document.getElementById('section');
-        section.innerHTML=('<div id="detailItem"><p id="detailTitle">'+title+'</p><p id="detailName">'+name+'</p><p id="detailDetail">'+detail+'</p></div>');
+        section.innerHTML=('<div id="detailItem"><p id="detailTitle">'+title+'</p><p id="detailName">'+name+'</p><p style="white-space:pre;" id="detailDetail">'+detail+'</p></div>');
     }
 
     function clickWrite(){
