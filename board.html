@@ -27,7 +27,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px 0;
+            justify-content: center;
+            height: 20%;
             background-color: rgb(255, 200, 138);
         }
         header #title{
@@ -45,7 +46,7 @@
             margin-right: auto;
             margin-top: 10px;
             margin-bottom: 10px;
-            min-height: 70%;
+            height: 65%;
         }
         .container #nav{
             border-radius: 10px;
@@ -53,7 +54,6 @@
             padding-left: 20px;          
             padding-top: 30px;
             margin-right: 10px;
-            /* flex-shrink: 0; */
             width: 25%;
         }
         .container #nav ul{
@@ -75,16 +75,23 @@
         .container #section{
             width: 70%;
             display: flex;
-            flex-direction: column;
+            flex-direction: column-reverse;
+            justify-content: flex-end;
             overflow-y: auto;
         }
         .container #section .dataList{
+            display: flex;
             border: 1px solid grey;
             background-color: rgb(250, 245, 245);
             border-radius: 8px;
-            flex-direction: column-reverse;
+            flex-direction: column;
             margin: 10px 0px;
             padding: 4px 8px;
+            cursor: pointer;
+        }
+
+        .container #section .dataList>li{
+            overflow: hidden;
         }
         .container #section .dataList>:first-child{
             font-size: 0.7em;
@@ -98,7 +105,9 @@
             border-radius: 10px;
             padding: 10px 8px;
             margin: 10px 0px;
+            word-break: break-all;
         }
+              
         .container #section #detailTitle{
             font-size: 1.2em;
             font-weight: 800;
@@ -112,20 +121,30 @@
         }   
 
         footer{
+            display: flex;
             height: 100px;
-            padding-top: 50px;
-            padding-bottom: 50px;
+            height: 10%;
             width: 100%;
-            text-align: center;
+            justify-content: center;
+            align-items: center;
             background-color: black;
             color: whitesmoke;
             font-size: 1.2em;
+            position: absolute;
+            bottom: 0px;
         }
         @media(max-width:560px){
+            header{
+                height: 15%;
+            }
+            header:first-child{
+                font-size: 0.8em;
+            }
             div.container{
                 flex-direction: column;
                 align-items: center;
                 padding-bottom: -100px;
+                justify-content: stretch;
                 min-height: fit-content;
             }
             .container #nav{
@@ -151,7 +170,7 @@
 
 <body onload="loadData()">
     <header>
-        <p id="title">Free Board</p>
+        <p id="title">Free Posting Board</p>
         <p id="subTitle">자유롭게 글을 남기는 게시판입니다</p>
     </header>
 
@@ -187,22 +206,32 @@
         req.onreadystatechange=function(){
             if(req.readyState==4&&req.status==200){
                 let jsonArray=JSON.parse(req.responseText);
+
+                jsonArray.forEach(function(value, index){
+                //    alert(value.postDetail); 
+                    section.innerHTML+=(`<ul class="dataList" onclick="clickItem('${value.postTitle}', '${value.postName}', '${value.postDetail}')"><li>${value.postName}</li><li>${value.postTitle}</li></ul>`);                    // section.innerHTML+=('<ul id="dd" class="dataList" onclick="clickItem('+passObject(value)+')"><li>'+`${value.postName}`+'</li><li>'+`${value.postTitle}`+'</li></ul>');
+
+                });
                 
-                for(let i=0;i<jsonArray.length;i++){
-                    let jsonStr=jsonArray[i];
-                    section.innerHTML+=('<ul class="dataList" onclick="clickItem(\''+jsonStr.postName+'\',\''+jsonStr.postTitle+'\',\''+jsonStr.postDetail+'\')"><li>'+jsonStr.postName+'</li><li>'+jsonStr.postTitle+'</li></ul>');
-                }
             }
         }
         req.open('GET', url, true);
         req.send();
     }
 
-    function clickItem(name, title, detail){
-        alert(detail);
+
+
+    function clickItem(title, name, detail){
+        // alert('aa');
         let section=document.getElementById('section');
-        section.innerHTML=('<div id="detailItem"><p id="detailTitle">'+title+'</p><p id="detailName">'+name+'</p><p style="white-space:pre;" id="detailDetail">'+detail+'</p></div>');
+        section.innerHTML=(`<div id="detailItem"><p id="detailTitle">${title}</p><p id="detailName">${name}</p><p id="detailDetail">${detail}</p></div>`);
     }
+    // function clickItem(value){
+    //     alert(value);
+    //     alert(value.postDetail);
+    //     let section=document.getElementById('section');
+    //     section.innerHTML=('<div id="detailItem"><p id="detailTitle">'+title+'</p><p id="detailName">'+name+'</p><p id="detailDetail">'+detail+'</p></div>');
+    // }
 
     function clickWrite(){
         var url='./write.html';
