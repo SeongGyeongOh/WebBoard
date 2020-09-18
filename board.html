@@ -105,7 +105,7 @@
             border-radius: 10px;
             padding: 10px 8px;
             margin: 10px 0px;
-            word-break: break-all;
+            /* word-break: break-all; */
         }
               
         .container #section #detailTitle{
@@ -197,6 +197,7 @@
 <script>
 
 
+    //데이터를 로드하는 함수
     function loadData(){
         let section=document.getElementById('section');
         section.innerHTML="";
@@ -206,11 +207,12 @@
         req.onreadystatechange=function(){
             if(req.readyState==4&&req.status==200){
                 let jsonArray=JSON.parse(req.responseText);
+                // let jsonArray=req.responseText;
 
                 jsonArray.forEach(function(value, index){
-                //    alert(value.postDetail); 
-                    section.innerHTML+=(`<ul class="dataList" onclick="clickItem('${value.postTitle}', '${value.postName}', '${value.postDetail}')"><li>${value.postName}</li><li>${value.postTitle}</li></ul>`);                    // section.innerHTML+=('<ul id="dd" class="dataList" onclick="clickItem('+passObject(value)+')"><li>'+`${value.postName}`+'</li><li>'+`${value.postTitle}`+'</li></ul>');
-
+                    section.innerHTML+=(`<ul id='aa' class='dataList' onclick='clickItem(${JSON.stringify(value)})'><li>${value.postName}</li><li>${value.postTitle}</li></ul>`);                   
+                    // 실행 안됨 
+                    // section.innerHTML+=(`<ul id='aa' class='dataList' onclick='clickItem(${value})'><li>${value.postName}</li><li>${value.postTitle}</li></ul>`);                   
                 });
                 
             }
@@ -219,25 +221,18 @@
         req.send();
     }
 
-
-
-    function clickItem(title, name, detail){
-        // alert('aa');
-        let section=document.getElementById('section');
-        section.innerHTML=(`<div id="detailItem"><p id="detailTitle">${title}</p><p id="detailName">${name}</p><p id="detailDetail">${detail}</p></div>`);
+    //아이템 클릭 시 반응하는 함수
+    function clickItem(object){
+        // alert('성공');
+        // alert(object.postName);
+        // let section=document.getElementById('section');
+        section.innerHTML=(`<div id="detailItem"><p id="detailTitle">${object.postTitle}</p><p id="detailName">${object.postName}</p><p id="detailDetail">${object.postDetail}</p></div>`);
     }
-    // function clickItem(value){
-    //     alert(value);
-    //     alert(value.postDetail);
-    //     let section=document.getElementById('section');
-    //     section.innerHTML=('<div id="detailItem"><p id="detailTitle">'+title+'</p><p id="detailName">'+name+'</p><p id="detailDetail">'+detail+'</p></div>');
-    // }
 
     function clickWrite(){
         var url='./write.html';
         var req=new XMLHttpRequest();
         req.open('GET', url, true);
-        // req.responseType='html';
         req.onreadystatechange=function(){
             if(req.readyState==4&&req.status==200){
      
